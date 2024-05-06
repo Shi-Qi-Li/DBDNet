@@ -1,0 +1,71 @@
+experiment_name: modelnet40_overlap_noise
+data_path: &data_path data/modelnet40_ply_hdf5_2048
+epoch: &epoch 300
+seed: 3407
+
+dataloader:
+  num_workers: &num_workers 4
+  batch_size: &batch_size 8
+  train_loader:
+    num_workers: *num_workers
+    batch_size: *batch_size
+  val_loader:
+    num_workers: *num_workers
+    batch_size: *batch_size
+  test_loader:
+    num_workers: *num_workers
+    batch_size: *batch_size
+
+dataset:
+  name: &dataset_name ModelNet40Reg
+  model: &mode crop
+  normal: &use_normal False
+  train_set:
+    name: *dataset_name
+    data_path: *data_path
+    train: True
+    mode: *mode
+    normal: *use_normal
+    categories: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+  val_set:
+    name: *dataset_name
+    data_path: *data_path
+    train: False
+    mode: *mode
+    normal: *use_normal
+    categories: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+  test_set:
+    name: *dataset_name
+    data_path: *data_path
+    train: False
+    mode: *mode
+    normal: *use_normal
+    categories: [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
+
+model:
+  name: HROverlapNet
+  in_channel: 3
+  k: 20
+  base_channel: 64
+  layer_num: 4
+
+loss:    
+  name: Iterative_Focal_Loss
+  iteration: 1
+  gamma: 4
+
+optimizer:
+  name: AdamW
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  
+lr_scheduler:
+  name: Cosine_Schedule_With_Warmup
+  num_warmup_steps: 5
+  num_training_steps: *epoch
+
+interval: 1
+train_vis_labels:
+  - 29
+train_vis_ids:
+  - 69

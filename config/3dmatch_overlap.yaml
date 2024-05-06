@@ -1,0 +1,64 @@
+experiment_name: 3dmatch_overlap
+data_path: &data_path data/3dmatch/indoor
+epoch: &epoch 150
+seed: 3407
+
+dataloader:
+  num_workers: &num_workers 4
+  batch_size: &batch_size 2
+  train_loader:
+    num_workers: *num_workers
+    batch_size: *batch_size
+  val_loader:
+    num_workers: *num_workers
+    batch_size: *batch_size
+  test_loader:
+    num_workers: *num_workers
+    batch_size: *batch_size
+
+dataset:
+  name: &dataset_name IndoorReg
+  sample_num: &sample_num 2048
+  train_set:
+    name: *dataset_name
+    data_path: *data_path
+    split: train
+    sample_num: *sample_num
+  val_set:
+    name: *dataset_name
+    data_path: *data_path
+    split: valid
+    sample_num: *sample_num
+  test_set:
+    name: *dataset_name
+    data_path: *data_path
+    split: 3DMatch
+    sample_num: *sample_num
+
+model:
+  name: HROverlapNet
+  in_channel: 3
+  k: 20
+  base_channel: 64
+  layer_num: 4
+
+loss:    
+  name: Iterative_Focal_Loss
+  iteration: 1
+  gamma: 4
+
+optimizer:
+  name: AdamW
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  
+lr_scheduler:
+  name: Cosine_Schedule_With_Warmup
+  num_warmup_steps: 5
+  num_training_steps: *epoch
+
+interval: 1
+train_vis_labels:
+  - 29
+train_vis_ids:
+  - 69
