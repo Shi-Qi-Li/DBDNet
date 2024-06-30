@@ -41,7 +41,7 @@ dataset:
     normal: *use_normal
     categories: [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
 
-overlap_pretrain_ckpt: ckpt/modelnet40_overlap_noise.py
+overlap_pretrain_ckpt: ckpt/modelnet40_overlap_noise.pth
 model:
   name: DBDNet
   in_channel: 3
