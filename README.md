@@ -43,13 +43,13 @@ The generated files will located in `data/3dmatch/indoor` folder.
 ## Train
 Train the overlap model.
 ```
-python train.py --config config modelnet40_overlap.yaml
-python train.py --config config 3dmatch_overlap.yaml
+python train.py --config config/modelnet40_overlap.yaml
+python train.py --config config/3dmatch_overlap.yaml
 ```
 Train the registration model.
 ```
-python train.py --config config modelnet40.yaml
-python train.py --config config 3dmatch.yaml
+python train.py --config config/modelnet40.yaml
+python train.py --config config/3dmatch.yaml
 ```
 
 ## Test
